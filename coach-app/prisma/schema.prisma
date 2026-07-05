@@ -18,6 +18,51 @@ enum Sport {
   OTHER
 }
 
+enum Slot {
+  LUNCH // weekday lunch break, hard cap 90 min
+  EVENING // weekdays from 17:30, must end by 21:00; never Friday
+  MORNING // weekends, open-ended
+}
+
+enum PlanStatus {
+  PLANNED
+  COMPLETED
+  MISSED
+  CANCELLED
+}
+
+model PlannedSession {
+  id            String     @id @default(cuid())
+  date          String // YYYY-MM-DD in config.timezone
+  slot          Slot
+  sport         Sport
+  title         String
+  // Easy sessions: intent only. Quality sessions: structure JSON
+  // { warmup, reps: [{count, work, target, recovery}], cooldown, fallback }.
+  intent        String?
+  structure     Json?
+  durationMin   Int
+  estimatedLoad Float
+  stopRule      String
+  isQuality     Boolean    @default(false) // "hard" for guardrail spacing
+  phase         String // e.g. RETURN-EASY | BUILD-BIKE | SHARPEN
+  status        PlanStatus @default(PLANNED)
+  // Set when a .fit upload is matched to this planned session.
+  completedSessionId String? @unique
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@index([date])
+}
+
+// Single-row mutable app state (id always 1). Health-gated toggles.
+model AppState {
+  id             Int     @id @default(1)
+  mode           String  @default("RETURN") // RETURN | BUILD
+  runningCleared Boolean @default(false)
+  swimPullOnly   Boolean @default(true)
+}
+
 model CompletedSession {
   id             String   @id @default(cuid())
   sport          Sport

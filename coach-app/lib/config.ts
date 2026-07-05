@@ -21,6 +21,41 @@ export const config = {
     trimpScale: 0.6,
   },
 
+  // Real time slots — sessions may only be scheduled into these.
+  availability: {
+    lunch: { start: "12:30", maxMin: 90 }, // the "1:30" lunch break
+    evening: { start: "17:30", latestEnd: "21:00", maxMin: 90 },
+    weekendMorning: { start: "09:00" }, // no cap
+    noEveningDays: [5], // ISO weekday: 5 = Friday (lunch long run day)
+  },
+
+  // Race arc (periodise backwards from these).
+  races: [
+    { name: "Erkner 70.3", date: "2026-09-13", priority: "B" },
+    { name: "Turin Half Marathon (unconfirmed)", date: "2026-11-29", priority: "C" },
+    { name: "Jesolo 70.3", date: "2027-05-02", priority: "B" },
+    { name: "Ironman Klagenfurt", date: "2027-06-27", priority: "A" },
+  ],
+
+  guardrails: {
+    rampCapPerWeek: { RETURN: 5, BUILD: 7 }, // max CTL gain per week
+    runVolumeIncreaseCap: 0.1, // +10% w/w once running resumes
+    minEasyOrRestDaysPer7: 2,
+    defaultStopRule:
+      "Stop if calf/shin pain > 3/10, pain that changes gait, or sharp pain of any kind.",
+  },
+
+  plan: {
+    taperDays: 10, // volume reduction window before the target race
+    easyWeeks: 2, // opening RETURN weeks: everything easy
+    weeklyGrowth: 1.07, // volume growth before the ramp cap clamps it
+    firstWeekBikeMin: 200, // total bike minutes in week 1
+    maxWeekBikeMin: 480,
+    swimMinPerSession: 45,
+    // Estimated intensity factors for planned session load (IF² model).
+    estIf: { easy: 0.62, longRide: 0.68, quality: 0.82, openWater: 0.7 },
+  },
+
   load: {
     npRollingWindowSec: 30, // normalized power window
     // Last-resort load per hour when a session has no power, pace or HR.
@@ -56,13 +91,13 @@ export const config = {
       { name: "Z7 Neuromuscular", from: 1.5, to: null },
     ],
     // Swim bands as % of the EASY anchor pace (time per 100m).
-    // Least precise anchor — confirm before use.
+    // Confirmed 2026-07: shifted 7% faster than the original derivation.
     swimPctOfEasyPace: [
-      { name: "Easy (pull)", from: 1.0, to: null },
-      { name: "Steady", from: 0.95, to: 1.0 },
-      { name: "Threshold", from: 0.89, to: 0.95 },
-      { name: "Fast / VO2", from: 0.83, to: 0.89 },
-      { name: "Sprint", from: null, to: 0.83 },
+      { name: "Easy (pull)", from: 0.93, to: null },
+      { name: "Steady", from: 0.88, to: 0.93 },
+      { name: "Threshold", from: 0.83, to: 0.88 },
+      { name: "Fast / VO2", from: 0.77, to: 0.83 },
+      { name: "Sprint", from: null, to: 0.77 },
     ],
   },
 } as const;

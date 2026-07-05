@@ -51,8 +51,10 @@ export default async function Home() {
         </p>
       )}
       <p>
-        Upload a <code>.fit</code> file to log a completed session. Zone
-        tables: <Link href="/zones">/zones</Link>.
+        <Link href="/calendar">Calendar</Link> · <Link href="/zones">Zones</Link>
+      </p>
+      <p>
+        Upload a <code>.fit</code> file to log a completed session.
       </p>
       <UploadForm />
 
