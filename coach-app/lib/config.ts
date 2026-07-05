@@ -40,6 +40,7 @@ export const config = {
   guardrails: {
     rampCapPerWeek: { RETURN: 5, BUILD: 7 }, // max CTL gain per week
     runVolumeIncreaseCap: 0.1, // +10% w/w once running resumes
+    runStartMinPerWeek: 60, // starter allowance for the first run week(s)
     minEasyOrRestDaysPer7: 2,
     defaultStopRule:
       "Stop if calf/shin pain > 3/10, pain that changes gait, or sharp pain of any kind.",

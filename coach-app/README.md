@@ -20,7 +20,14 @@ built in phases.
   on rejection). Guardrails enforce: no running until cleared, slot
   validity, no consecutive hard days, ≥2 easy/rest days per 7-day window,
   pull-only swims, week-over-week CTL ramp caps (RETURN +5 / BUILD +7).
-- Phase 4+: guardrail unit tests, coach chat, chat-based logging.
+- **Phase 4 (this)**: guardrails hardened and unit-tested against every cap
+  (`test/guardrails.test.ts`, 15 tests) — including the run-volume +10% w/w
+  rule (dormant until running is cleared, starter floor 60 min/week) and the
+  RETURN/BUILD ramp caps. Health gates: `PATCH /api/state` toggles
+  mode / runningCleared / swimPullOnly; BUILD requires an explicit
+  `confirmHealthy: true`. Small settings panel on the home page.
+- Phase 5+: coach chat (PlanMutation → guardrails → calendar), chat-based
+  logging into DailyContext.
 
 ## Stack
 

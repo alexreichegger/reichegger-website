@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { dailyMetrics, fitnessSnapshot } from "@/lib/load";
+import { getAppState } from "@/lib/plan-context";
 import { prisma } from "@/lib/prisma";
+import { StatePanel } from "./state-panel";
 import { UploadForm } from "./upload-form";
 
 export const dynamic = "force-dynamic";
@@ -22,6 +24,7 @@ export default async function Home() {
       sessions.map((s) => ({ startTime: s.startTime, load: s.load }))
     )
   );
+  const state = await getAppState();
 
   return (
     <main>
@@ -53,6 +56,11 @@ export default async function Home() {
       <p>
         <Link href="/calendar">Calendar</Link> · <Link href="/zones">Zones</Link>
       </p>
+      <StatePanel
+        mode={state.mode}
+        runningCleared={state.runningCleared}
+        swimPullOnly={state.swimPullOnly}
+      />
       <p>
         Upload a <code>.fit</code> file to log a completed session.
       </p>

@@ -29,15 +29,30 @@ export async function getCompletedByDay(): Promise<{ date: string; load: number 
   return [...byDay.entries()].map(([date, load]) => ({ date, load }));
 }
 
+export async function getCompletedRunByDay(): Promise<{ date: string; min: number }[]> {
+  const runs = await prisma.completedSession.findMany({
+    where: { sport: "RUN" },
+    select: { startTime: true, elapsedSec: true },
+  });
+  const byDay = new Map<string, number>();
+  for (const r of runs) {
+    const day = localDate(r.startTime);
+    byDay.set(day, (byDay.get(day) ?? 0) + r.elapsedSec / 60);
+  }
+  return [...byDay.entries()].map(([date, min]) => ({ date, min }));
+}
+
 export async function getGuardrailContext(): Promise<GuardrailContext> {
-  const [state, completedByDay, planned] = await Promise.all([
+  const [state, completedByDay, completedRunByDay, planned] = await Promise.all([
     getAppState(),
     getCompletedByDay(),
+    getCompletedRunByDay(),
     prisma.plannedSession.findMany({ where: { status: "PLANNED" } }),
   ]);
   return {
     state,
     completedByDay,
+    completedRunByDay,
     planned: planned.map(
       (s): PlannedLike => ({
         id: s.id,

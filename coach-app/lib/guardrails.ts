@@ -36,6 +36,8 @@ export interface GuardrailContext {
   planned: PlannedLike[]; // active (PLANNED) sessions, whole block
   // Completed history for ramp simulation: (day, load) pairs.
   completedByDay: { date: string; load: number }[];
+  // Completed RUN minutes per day — feeds the run-volume w/w cap.
+  completedRunByDay?: { date: string; min: number }[];
   today: string; // YYYY-MM-DD
 }
 
@@ -108,13 +110,16 @@ function sessionViolations(
   return out;
 }
 
-/** Whole-plan rules evaluated on a candidate plan (today onwards). */
-function planViolations(
+/**
+ * Whole-plan rules evaluated on a candidate plan (today onwards).
+ * Exported so tests and the generator can assert a plan is clean.
+ */
+export function checkPlan(
   planned: PlannedLike[],
-  completedByDay: { date: string; load: number }[],
-  state: AppStateLike,
-  today: string
+  ctx: Omit<GuardrailContext, "planned">
 ): string[] {
+  const { state, completedByDay, today } = ctx;
+  const completedRunByDay = ctx.completedRunByDay ?? [];
   const out: string[] = [];
   const future = planned.filter((s) => s.status === "PLANNED" && s.date >= today);
   if (future.length === 0) return out;
@@ -161,15 +166,47 @@ function planViolations(
   ];
   const series = dailyMetrics(sim, lastDate);
   const byDate = new Map(series.map((r) => [r.date, r.ctl]));
+  const seriesStart = series[0]?.date ?? today;
   const firstSunday = addDays(today, 7 - isoWeekday(today));
-  for (let d = addDays(firstSunday, 7); d <= lastDate; d = addDays(d, 7)) {
+  for (let d = firstSunday; d <= lastDate; d = addDays(d, 7)) {
     const now = byDate.get(d);
-    const weekAgo = byDate.get(addDays(d, -7));
-    if (now !== undefined && weekAgo !== undefined && now - weekAgo > cap + 0.05) {
+    if (now === undefined) continue;
+    // Before the first recorded load, CTL sat at the seed value.
+    const prev = addDays(d, -7);
+    const weekAgo = byDate.get(prev) ?? (prev < seriesStart ? config.load.ctlSeed : undefined);
+    if (weekAgo !== undefined && now - weekAgo > cap + 0.05) {
       out.push(
         `CTL ramp of +${(now - weekAgo).toFixed(1)} in the week ending ${d} exceeds the ${state.mode} cap of +${cap}.`
       );
       break; // one ramp violation is enough detail
+    }
+  }
+
+  // 4. Run volume w/w cap — dormant until running is cleared.
+  if (state.runningCleared) {
+    const runMin = new Map<string, number>(); // Monday of week → minutes
+    const weekOf = (date: string) => addDays(date, 1 - isoWeekday(date));
+    for (const r of completedRunByDay) {
+      const w = weekOf(r.date);
+      runMin.set(w, (runMin.get(w) ?? 0) + r.min);
+    }
+    for (const s of future.filter((s) => s.sport === "RUN")) {
+      const w = weekOf(s.date);
+      runMin.set(w, (runMin.get(w) ?? 0) + s.durationMin);
+    }
+    const weeks = [...runMin.keys()].sort();
+    const capPct = 1 + config.guardrails.runVolumeIncreaseCap;
+    const floor = config.guardrails.runStartMinPerWeek;
+    for (const w of weeks) {
+      if (addDays(w, 6) < today) continue; // historical weeks aren't ours to fix
+      const prev = runMin.get(addDays(w, -7)) ?? 0;
+      const allowed = Math.max(prev * capPct, floor);
+      const got = runMin.get(w)!;
+      if (got > allowed + 0.5) {
+        out.push(
+          `Run volume of ${Math.round(got)} min in the week of ${w} exceeds the allowed ${Math.round(allowed)} min (prev week ${Math.round(prev)} min, +${Math.round(config.guardrails.runVolumeIncreaseCap * 100)}% cap).`
+        );
+      }
     }
   }
 
@@ -198,9 +235,7 @@ export function validateOps(
   ctx: GuardrailContext
 ): { results: OpResult[]; plan: PlannedLike[] } {
   let plan = [...ctx.planned];
-  const baseline = new Set(
-    planViolations(plan, ctx.completedByDay, ctx.state, ctx.today)
-  );
+  const baseline = new Set(checkPlan(plan, ctx));
   const results: OpResult[] = [];
 
   for (const op of ops) {
@@ -232,7 +267,7 @@ export function validateOps(
     }
 
     if (reasons.length === 0) {
-      for (const v of planViolations(candidate, ctx.completedByDay, ctx.state, ctx.today)) {
+      for (const v of checkPlan(candidate, ctx)) {
         if (!baseline.has(v)) reasons.push(v);
       }
     }
