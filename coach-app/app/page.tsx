@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { dailyMetrics, fitnessSnapshot } from "@/lib/load";
 import { prisma } from "@/lib/prisma";
 import { UploadForm } from "./upload-form";
 
@@ -15,12 +17,42 @@ export default async function Home() {
     take: 50,
     omit: { rawSession: true, records: true },
   });
+  const fitness = fitnessSnapshot(
+    dailyMetrics(
+      sessions.map((s) => ({ startTime: s.startTime, load: s.load }))
+    )
+  );
 
   return (
     <main>
-      <h1>Coach — Phase 1</h1>
+      <h1>Coach</h1>
+      {fitness && (
+        <p
+          style={{
+            display: "flex",
+            gap: "1.5rem",
+            background: "#f4f4f4",
+            padding: "0.6rem 0.8rem",
+            borderRadius: 6,
+          }}
+        >
+          <span>
+            CTL <strong>{fitness.ctl}</strong>
+          </span>
+          <span>
+            ATL <strong>{fitness.atl}</strong>
+          </span>
+          <span>
+            TSB <strong>{fitness.tsb}</strong>
+          </span>
+          <span>
+            ramp <strong>{fitness.rampRate}</strong> CTL/wk
+          </span>
+        </p>
+      )}
       <p>
-        Upload a <code>.fit</code> file to log a completed session.
+        Upload a <code>.fit</code> file to log a completed session. Zone
+        tables: <Link href="/zones">/zones</Link>.
       </p>
       <UploadForm />
 
@@ -37,6 +69,7 @@ export default async function Home() {
               <th>Distance</th>
               <th>Avg power</th>
               <th>Avg HR</th>
+              <th>Load</th>
             </tr>
           </thead>
           <tbody>
@@ -54,6 +87,15 @@ export default async function Home() {
                 </td>
                 <td>{s.avgPower != null ? `${Math.round(s.avgPower)} W` : "—"}</td>
                 <td>{s.avgHr != null ? `${Math.round(s.avgHr)} bpm` : "—"}</td>
+                <td>
+                  {s.load != null ? Math.round(s.load) : "—"}
+                  {s.loadMethod && (
+                    <span style={{ color: "#888", fontSize: "0.85em" }}>
+                      {" "}
+                      ({s.loadMethod})
+                    </span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

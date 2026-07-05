@@ -9,7 +9,9 @@
     "start": "next start",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "parse-fit": "tsx scripts/parse-fit.ts"
+    "parse-fit": "tsx scripts/parse-fit.ts",
+    "recompute-load": "tsx scripts/recompute-load.ts",
+    "test": "tsx --test test/*.test.ts"
   },
   "keywords": [],
   "author": "",

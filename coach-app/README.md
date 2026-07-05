@@ -5,9 +5,13 @@ built in phases.
 
 ## Status
 
-- **Phase 1 (this)**: Prisma schema + `.fit` upload + parser. An uploaded `.fit`
+- **Phase 1**: Prisma schema + `.fit` upload + parser. An uploaded `.fit`
   becomes a `CompletedSession` row with summary fields and per-record streams.
-- Phase 2+: load engine (`LOAD.md`), zones, calendar, guardrails, coach chat.
+- **Phase 2 (this)**: deterministic load engine (`LOAD.md`) — TSS/rTSS/TRIMP,
+  CTL/ATL/TSB/ramp — and zone tables derived from the anchors (`/zones`,
+  pending confirmation). All constants in `lib/config.ts`; after tuning run
+  `npm run recompute-load`. Tests: `npm test`.
+- Phase 3+: calendar, guardrails, coach chat.
 
 ## Stack
 

@@ -33,8 +33,9 @@ model CompletedSession {
   avgSpeedMps    Float?
   elevationGainM Float?
   calories       Float?
-  // Load score — computed by the deterministic load engine in Phase 2.
+  // Load score — computed by the deterministic load engine (lib/load.ts).
   load           Float?
+  loadMethod     String? // TSS | rTSS | TRIMP | FALLBACK (see LOAD.md)
   fileName       String
   fileSha256     String   @unique // dedupe re-uploads of the same file
   rawSession     Json // full parsed FIT session message, kept for audit

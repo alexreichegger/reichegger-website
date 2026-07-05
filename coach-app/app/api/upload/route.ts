@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { NextResponse } from "next/server";
 import { parseFit } from "@/lib/fit";
+import { sessionLoad } from "@/lib/load";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
@@ -35,9 +36,12 @@ export async function POST(req: Request) {
   }
 
   const { rawSession, records, ...summary } = parsed;
+  const { load, method } = sessionLoad(parsed);
   const session = await prisma.completedSession.create({
     data: {
       ...summary,
+      load,
+      loadMethod: method,
       fileName: file.name,
       fileSha256: sha256,
       rawSession: rawSession as object,
