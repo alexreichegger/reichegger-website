@@ -1,0 +1,45 @@
+// Endurance coach app — Phase 1 schema.
+// Completed sessions ingested from .fit uploads. Planned sessions, load
+// engine fields and daily context arrive in later phases via migrations.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Sport {
+  BIKE
+  RUN
+  SWIM
+  OTHER
+}
+
+model CompletedSession {
+  id             String   @id @default(cuid())
+  sport          Sport
+  startTime      DateTime
+  elapsedSec     Float
+  movingSec      Float?
+  distanceM      Float?
+  avgPower       Float?
+  maxPower       Float?
+  avgHr          Float?
+  maxHr          Float?
+  avgCadence     Float?
+  avgSpeedMps    Float?
+  elevationGainM Float?
+  calories       Float?
+  // Load score — computed by the deterministic load engine in Phase 2.
+  load           Float?
+  fileName       String
+  fileSha256     String   @unique // dedupe re-uploads of the same file
+  rawSession     Json // full parsed FIT session message, kept for audit
+  records        Json // per-record streams needed later for NP/rTSS/TRIMP
+  createdAt      DateTime @default(now())
+
+  @@index([startTime])
+}
