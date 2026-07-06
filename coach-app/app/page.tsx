@@ -54,7 +54,8 @@ export default async function Home() {
         </p>
       )}
       <p>
-        <Link href="/calendar">Calendar</Link> · <Link href="/zones">Zones</Link>
+        <Link href="/chat">Coach chat</Link> · <Link href="/calendar">Calendar</Link> ·{" "}
+        <Link href="/zones">Zones</Link>
       </p>
       <StatePanel
         mode={state.mode}

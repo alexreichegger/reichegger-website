@@ -26,8 +26,15 @@ built in phases.
   RETURN/BUILD ramp caps. Health gates: `PATCH /api/state` toggles
   mode / runningCleared / swimPullOnly; BUILD requires an explicit
   `confirmHealthy: true`. Small settings panel on the home page.
-- Phase 5+: coach chat (PlanMutation → guardrails → calendar), chat-based
-  logging into DailyContext.
+- **Phase 5+6 (this)**: coach chat at `/chat` — `claude-sonnet-5`
+  server-side (the only runtime model), proposing `PlanMutation` ops through
+  a tool that runs `validateOps` (same guardrails as drag-to-move) before
+  anything touches the calendar; rejected ops return with reasons. Morning
+  check-ins, missed-session detection (coach asks, never reshuffles),
+  pre-key-session readiness, post-upload debriefs, `.fit` upload inside the
+  chat, and chat-based logging into `DailyContext` (date, sleep, pain,
+  feel 1-5, notes — no HRV). **Requires `ANTHROPIC_API_KEY`** in the
+  environment; without it the chat responds with a clear offline notice.
 
 ## Stack
 

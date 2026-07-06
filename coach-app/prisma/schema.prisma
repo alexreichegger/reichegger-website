@@ -63,6 +63,29 @@ model AppState {
   swimPullOnly   Boolean @default(true)
 }
 
+model ChatMessage {
+  id        String   @id @default(cuid())
+  role      String // "user" | "assistant"
+  content   String
+  // Result of an applied PlanMutation: { rationale, applied: [...], rejected: [{op, reasons}] }
+  mutation  Json?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+// One row per day, captured through chat check-ins. No HRV by design.
+model DailyContext {
+  id        String   @id @default(cuid())
+  date      String   @unique // YYYY-MM-DD in config.timezone
+  sleepH    Float?
+  pain      Int? // 0-10
+  feel      Int? // 1-5
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model CompletedSession {
   id             String   @id @default(cuid())
   sport          Sport

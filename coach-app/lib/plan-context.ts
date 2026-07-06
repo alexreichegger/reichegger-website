@@ -47,7 +47,9 @@ export async function getGuardrailContext(): Promise<GuardrailContext> {
     getAppState(),
     getCompletedByDay(),
     getCompletedRunByDay(),
-    prisma.plannedSession.findMany({ where: { status: "PLANNED" } }),
+    // MISSED sessions stay addressable so the coach can move (revive) or
+    // drop them; whole-plan rules only evaluate PLANNED ones.
+    prisma.plannedSession.findMany({ where: { status: { in: ["PLANNED", "MISSED"] } } }),
   ]);
   return {
     state,
