@@ -35,15 +35,8 @@
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         ::selection { background-color: #C5A059; color: #000; }
         .lang-btn.active { font-weight: 700; color: #C5A059; text-decoration: underline; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .hero-title { font-size: clamp(2.75rem, 10vw, 6rem); line-height: 0.92; text-wrap: balance; overflow-wrap: anywhere; }
         .cta-btn, .form-submit { text-wrap: balance; white-space: normal; }
-        .hero-line { margin-bottom: 0.18em; }
-        .hero-line:last-child { margin-bottom: 0; }
-        @media (max-width: 640px) {
-            .hero-bg-num { font-size: 5.5rem !important; opacity: 0.06 !important; top: 5.5rem !important; right: 1rem !important; }
-        }
-        .logo-fallback { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.15em; }
+        .logo-fallback { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.12em; }
     </style>
 </head>
 <body class="font-sans text-brand-black bg-brand-offWhite antialiased">
@@ -59,11 +52,11 @@
 
     <!-- NAVIGATION -->
     <nav class="sticky top-0 z-50 bg-white border-b border-black">
-        <div class="flex justify-between items-stretch h-24 md:h-32">
-            <div class="flex-shrink-0 flex items-center px-6 border-r-0 md:border-r border-black bg-white min-w-[180px]">
+        <div class="flex justify-between items-stretch h-32 md:h-44">
+            <div class="flex-shrink-0 flex items-center px-4 md:px-8 border-r-0 md:border-r border-black bg-white">
                 <a href="#top" class="flex flex-col justify-center cursor-pointer">
-                    <img src="REICHEGGER- Logo.jpg" alt="Reichegger" class="h-20 md:h-28 w-auto object-contain mix-blend-multiply" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-                    <span class="logo-fallback text-2xl md:text-3xl uppercase" style="display:none;">Reichegger</span>
+                    <img src="REICHEGGER- Logo.jpg" alt="Reichegger" class="h-28 md:h-40 w-auto object-contain mix-blend-multiply" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                    <span class="logo-fallback text-3xl md:text-5xl uppercase" style="display:none;">Reichegger</span>
                 </a>
             </div>
             <div class="flex flex-1 justify-end items-stretch">
@@ -83,28 +76,14 @@
 
     <!-- HERO -->
     <header class="grid grid-cols-1 border-b border-black">
-        <div class="bg-white p-8 md:p-16 flex flex-col justify-center relative min-h-[80vh]">
-            <div class="absolute top-8 right-8 font-display font-bold text-9xl text-gray-100 select-none z-0 hero-bg-num">66</div>
-            <div class="relative z-10 max-w-4xl mr-auto text-left">
-                <div class="flex flex-wrap items-center gap-3 mb-8">
-                    <span class="inline-block py-1 px-3 border border-black rounded-full text-xs font-bold uppercase tracking-widest bg-brand-gold text-black" data-i18n="est">Est. 1966</span>
-                    <span class="inline-flex items-center gap-2 py-1 px-3 border border-black rounded-full text-xs font-bold uppercase tracking-widest bg-white text-black">
-                        <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
-                        <span data-i18n="soon_badge">Nuovo sito in arrivo</span>
-                    </span>
-                </div>
+        <div class="bg-white p-8 md:p-16 flex flex-col justify-center relative min-h-[70vh]">
+            <div class="relative z-10 max-w-3xl mr-auto text-left">
+                <span class="inline-flex items-center gap-2 py-1 px-3 border border-black rounded-full text-xs font-bold uppercase tracking-widest bg-white text-black mb-8">
+                    <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
+                    <span data-i18n="soon_badge">Nuovo sito in arrivo</span>
+                </span>
 
-                <h1 class="font-display text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.98] uppercase mb-8 tracking-tight hero-title">
-                    <span class="block hero-line" data-i18n="hero_title_1">Selezione</span>
-                    <span class="block hero-line text-brand-gold" data-i18n="hero_title_2">fornitura</span>
-                    <span class="block hero-line" data-i18n="hero_title_3">Bevande</span>
-                </h1>
-
-                <p class="font-sans text-lg md:text-xl text-gray-600 max-w-xl leading-relaxed mb-6" data-i18n="hero_desc">
-                    Selezioniamo i migliori marchi internazionali e distribuiamo in tutta Italia. Il partner di fiducia per aziende e privati.
-                </p>
-
-                <p class="font-sans text-base text-gray-500 max-w-xl leading-relaxed mb-12" data-i18n="soon_note">
+                <p class="font-display text-3xl md:text-5xl font-bold uppercase leading-tight mb-10" data-i18n="soon_note">
                     Stiamo lavorando al nostro nuovo sito web. Nel frattempo siamo a vostra completa disposizione: contattateci direttamente.
                 </p>
 
@@ -119,37 +98,6 @@
             </div>
         </div>
     </header>
-
-    <!-- SERVICES -->
-    <section id="servizi" class="grid grid-cols-1 lg:grid-cols-12 border-b border-black">
-        <div class="lg:col-span-4 bg-brand-black text-white p-12 md:p-16 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center">
-            <span class="text-brand-gold font-mono text-xs uppercase tracking-widest mb-6" data-i18n="serv_subtitle">Il nostro metodo</span>
-            <h2 class="font-display text-4xl md:text-5xl font-bold uppercase leading-tight mb-8" data-i18n="serv_title">Logistica <br>Integrata</h2>
-            <p class="text-gray-400 leading-relaxed" data-i18n="serv_desc">Non consegniamo solo scatole. Gestiamo il flusso delle vostre bevande con la precisione che il vostro business richiede.</p>
-        </div>
-        <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2">
-            <div class="p-12 border-b md:border-b-0 md:border-r border-black hover:bg-gray-50 transition-colors">
-                <i class="fas fa-truck-fast text-3xl mb-6 text-brand-black"></i>
-                <h3 class="font-display text-xl font-bold uppercase mb-3" data-i18n="serv_1_title">Puntualità</h3>
-                <p class="text-sm text-gray-600" data-i18n="serv_1_desc">Consegne programmate e gestione rapida degli ordini in tutta Italia.</p>
-            </div>
-            <div class="p-12 border-b md:border-b-0 border-black hover:bg-gray-50 transition-colors">
-                <i class="fas fa-clipboard-list text-3xl mb-6 text-brand-black"></i>
-                <h3 class="font-display text-xl font-bold uppercase mb-3" data-i18n="serv_2_title">Consulenza</h3>
-                <p class="text-sm text-gray-600" data-i18n="serv_2_desc">Supporto nella creazione della carta vini e birre ideale per il tuo locale.</p>
-            </div>
-            <div class="p-12 border-b md:border-b-0 md:border-r border-black hover:bg-gray-50 transition-colors">
-                <i class="fas fa-boxes text-3xl mb-6 text-brand-black"></i>
-                <h3 class="font-display text-xl font-bold uppercase mb-3" data-i18n="serv_3_title">Magazzino</h3>
-                <p class="text-sm text-gray-600" data-i18n="serv_3_desc">Stoccaggio ottimale a temperatura controllata per vini e birre speciali.</p>
-            </div>
-            <div class="p-12 border-black hover:bg-gray-50 transition-colors">
-                <i class="fas fa-calendar-check text-3xl mb-6 text-brand-black"></i>
-                <h3 class="font-display text-xl font-bold uppercase mb-3" data-i18n="serv_4_title">Eventi</h3>
-                <p class="text-sm text-gray-600" data-i18n="serv_4_desc">Fornitura completa e attrezzature (spillatori, banchi) per feste e sagre.</p>
-            </div>
-        </div>
-    </section>
 
     <!-- CONTACT -->
     <section id="contatti" class="grid grid-cols-1 lg:grid-cols-2">
@@ -222,8 +170,8 @@
     <footer class="bg-brand-black text-white border-t border-white/10">
         <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 border-b border-white/10">
             <div class="p-8 md:p-12 flex items-center justify-center md:justify-start">
-                <img src="REICHEGGER- Logo.jpg" alt="Reichegger" class="h-20 w-auto object-contain invert mix-blend-screen" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-                <span class="logo-fallback text-2xl uppercase text-white" style="display:none;">Reichegger</span>
+                <img src="REICHEGGER- Logo.jpg" alt="Reichegger" class="h-24 w-auto object-contain invert mix-blend-screen" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                <span class="logo-fallback text-3xl uppercase text-white" style="display:none;">Reichegger</span>
             </div>
             <div class="p-8 md:p-12 flex flex-col justify-center text-xs text-gray-400 space-y-2 col-span-2">
                 <p><strong>Fattura Elettronica (codice destinatario):</strong> T04ZH3</p>
@@ -242,26 +190,10 @@
                 form_error: "Qualcosa è andato storto. Riprova più tardi.",
                 marquee: "<span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Lun-Ven)</span> • <span class='mx-8'>Marchi Internazionali</span> • <span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Lun-Ven)</span> • <span class='mx-8'>Marchi Internazionali</span>",
                 nav_contact: "Contattaci",
-                est: "Est. 1966",
                 soon_badge: "Nuovo sito in arrivo",
-                hero_title_1: "Selezione",
-                hero_title_2: "fornitura",
-                hero_title_3: "Bevande",
-                hero_desc: "Selezioniamo i migliori marchi internazionali e distribuiamo in tutta Italia. Il partner di fiducia per aziende e privati.",
                 soon_note: "Stiamo lavorando al nostro nuovo sito web. Nel frattempo siamo a vostra completa disposizione: contattateci direttamente.",
                 btn_client: "Diventa Cliente",
                 btn_call: "Chiamaci",
-                serv_subtitle: "Il nostro metodo",
-                serv_title: "Logistica <br>Integrata",
-                serv_desc: "Non consegniamo solo scatole. Gestiamo il flusso delle vostre bevande con la precisione che il vostro business richiede.",
-                serv_1_title: "Puntualità",
-                serv_1_desc: "Consegne programmate e gestione rapida degli ordini in tutta Italia.",
-                serv_2_title: "Consulenza",
-                serv_2_desc: "Supporto nella creazione della carta vini e birre ideale per il tuo locale.",
-                serv_3_title: "Magazzino",
-                serv_3_desc: "Stoccaggio ottimale a temperatura controllata per vini e birre speciali.",
-                serv_4_title: "Eventi",
-                serv_4_desc: "Fornitura completa e attrezzature (spillatori, banchi) per feste e sagre.",
                 cont_badge: "Contatti",
                 cont_title: "Parliamo.",
                 cont_hq: "Sede Operativa",
@@ -276,26 +208,10 @@
                 form_error: "Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.",
                 marquee: "<span class='mx-8'>Import & Vertrieb</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mo-Fr)</span> • <span class='mx-8'>Internationale Marken</span> • <span class='mx-8'>Import & Vertrieb</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mo-Fr)</span> • <span class='mx-8'>Internationale Marken</span>",
                 nav_contact: "Kontakt",
-                est: "Gegr. 1966",
                 soon_badge: "Neue Website in Kürze",
-                hero_title_1: "Import",
-                hero_title_2: "Vertrieb",
-                hero_title_3: "Getränke",
-                hero_desc: "Wir wählen die besten internationalen Marken aus und vertreiben sie in ganz Italien. Der vertrauenswürdige Partner für Unternehmen und Privatpersonen.",
                 soon_note: "Wir arbeiten an unserer neuen Website. In der Zwischenzeit stehen wir Ihnen gerne zur Verfügung – kontaktieren Sie uns direkt.",
                 btn_client: "Kunde werden",
                 btn_call: "Rufen Sie uns an",
-                serv_subtitle: "Unsere Methode",
-                serv_title: "Integrierte <br>Logistik",
-                serv_desc: "Wir liefern nicht nur Kisten. Wir steuern Ihren Getränkefluss mit der Präzision, die Ihr Geschäft erfordert.",
-                serv_1_title: "Pünktlichkeit",
-                serv_1_desc: "Geplante Lieferungen und schnelles Auftragsmanagement in ganz Italien.",
-                serv_2_title: "Beratung",
-                serv_2_desc: "Unterstützung bei der Erstellung der idealen Wein- und Bierkarte für Ihr Lokal.",
-                serv_3_title: "Lagerung",
-                serv_3_desc: "Optimale Lagerung bei kontrollierter Temperatur für spezielle Weine und Biere.",
-                serv_4_title: "Events",
-                serv_4_desc: "Komplettversorgung und Ausrüstung (Zapfanlagen, Theken) für Feste und Messen.",
                 cont_badge: "Kontakt",
                 cont_title: "Sprechen wir.",
                 cont_hq: "Hauptsitz",
@@ -310,26 +226,10 @@
                 form_error: "Something went wrong. Please try again later.",
                 marquee: "<span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mon-Fri)</span> • <span class='mx-8'>International Brands</span> • <span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mon-Fri)</span> • <span class='mx-8'>International Brands</span>",
                 nav_contact: "Contact Us",
-                est: "Est. 1966",
                 soon_badge: "New website coming soon",
-                hero_title_1: "Import",
-                hero_title_2: "wholesale",
-                hero_title_3: "Beverage",
-                hero_desc: "We select the best international brands and distribute throughout Italy. The trusted partner for businesses and private clients.",
                 soon_note: "We are working on our new website. In the meantime we are fully at your service — get in touch with us directly.",
                 btn_client: "Become a Client",
                 btn_call: "Call Us",
-                serv_subtitle: "Our Method",
-                serv_title: "Integrated <br>Logistics",
-                serv_desc: "We don't just deliver boxes. We manage your beverage flow with the precision your business requires.",
-                serv_1_title: "Punctuality",
-                serv_1_desc: "Scheduled deliveries and rapid order management throughout Italy.",
-                serv_2_title: "Consulting",
-                serv_2_desc: "Support in creating the ideal wine and beer list for your venue.",
-                serv_3_title: "Storage",
-                serv_3_desc: "Optimal temperature-controlled storage for special wines and beers.",
-                serv_4_title: "Events",
-                serv_4_desc: "Complete supply and equipment (taps, counters) for parties and festivals.",
                 cont_badge: "Contact",
                 cont_title: "Let's Talk.",
                 cont_hq: "Headquarters",
