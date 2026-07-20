@@ -35,7 +35,6 @@
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         ::selection { background-color: #C5A059; color: #000; }
         .lang-btn.active { font-weight: 700; color: #C5A059; text-decoration: underline; }
-        .cta-btn, .form-submit { text-wrap: balance; white-space: normal; }
         .logo-fallback { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.12em; }
     </style>
 </head>
@@ -76,25 +75,16 @@
 
     <!-- HERO -->
     <header class="grid grid-cols-1 border-b border-black">
-        <div class="bg-white p-8 md:p-16 flex flex-col justify-center relative min-h-[70vh]">
-            <div class="relative z-10 max-w-3xl mr-auto text-left">
-                <span class="inline-flex items-center gap-2 py-1 px-3 border border-black rounded-full text-xs font-bold uppercase tracking-widest bg-white text-black mb-8">
+        <div class="bg-white px-8 md:px-16 flex flex-col justify-center relative">
+            <div class="relative z-10 max-w-3xl mr-auto text-left py-14 md:py-20">
+                <span class="inline-flex items-center gap-2 py-1 px-3 border border-black rounded-full text-xs font-bold uppercase tracking-widest bg-white text-black mb-6">
                     <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
                     <span data-i18n="soon_badge">Nuovo sito in arrivo</span>
                 </span>
 
-                <p class="font-display text-3xl md:text-5xl font-bold uppercase leading-tight mb-10" data-i18n="soon_note">
-                    Stiamo lavorando al nostro nuovo sito web. Nel frattempo siamo a vostra completa disposizione: contattateci direttamente.
+                <p class="font-display text-3xl md:text-4xl font-bold uppercase leading-tight" data-i18n="soon_note">
+                    Intanto puoi contattarci qui &darr;
                 </p>
-
-                <div class="flex flex-col sm:flex-row gap-4 justify-start">
-                    <a href="#contatti" class="px-12 py-4 border border-black bg-brand-black text-white font-display font-bold uppercase text-sm tracking-wider hover:bg-brand-gold hover:text-black transition-colors duration-300 text-center cta-btn" data-i18n="btn_client">
-                        Diventa Cliente
-                    </a>
-                    <a href="tel:+390471931116" class="px-12 py-4 border border-black bg-white text-black font-display font-bold uppercase text-sm tracking-wider hover:bg-brand-gold hover:text-black transition-colors duration-300 text-center cta-btn" data-i18n="btn_call">
-                        Chiamaci
-                    </a>
-                </div>
             </div>
         </div>
     </header>
@@ -157,7 +147,7 @@
                     <label class="block font-display font-bold uppercase text-sm mb-2" data-i18n="form_msg">Messaggio</label>
                     <textarea rows="4" name="message" required class="w-full bg-white border border-black p-4 focus:outline-none focus:bg-brand-gold/10 transition-colors rounded-none"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-brand-black text-white font-display font-bold uppercase py-5 hover:bg-brand-gold hover:text-black transition-colors duration-300 border border-transparent hover:border-black form-submit" data-i18n="form_btn">
+                <button type="submit" class="w-full bg-brand-black text-white font-display font-bold uppercase py-5 hover:bg-brand-gold hover:text-black transition-colors duration-300 border border-transparent hover:border-black" data-i18n="form_btn">
                     Invia Richiesta
                 </button>
             </form>
@@ -191,9 +181,7 @@
                 marquee: "<span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Lun-Ven)</span> • <span class='mx-8'>Marchi Internazionali</span> • <span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Lun-Ven)</span> • <span class='mx-8'>Marchi Internazionali</span>",
                 nav_contact: "Contattaci",
                 soon_badge: "Nuovo sito in arrivo",
-                soon_note: "Stiamo lavorando al nostro nuovo sito web. Nel frattempo siamo a vostra completa disposizione: contattateci direttamente.",
-                btn_client: "Diventa Cliente",
-                btn_call: "Chiamaci",
+                soon_note: "Intanto puoi contattarci qui &darr;",
                 cont_badge: "Contatti",
                 cont_title: "Parliamo.",
                 cont_hq: "Sede Operativa",
@@ -209,9 +197,7 @@
                 marquee: "<span class='mx-8'>Import & Vertrieb</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mo-Fr)</span> • <span class='mx-8'>Internationale Marken</span> • <span class='mx-8'>Import & Vertrieb</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mo-Fr)</span> • <span class='mx-8'>Internationale Marken</span>",
                 nav_contact: "Kontakt",
                 soon_badge: "Neue Website in Kürze",
-                soon_note: "Wir arbeiten an unserer neuen Website. In der Zwischenzeit stehen wir Ihnen gerne zur Verfügung – kontaktieren Sie uns direkt.",
-                btn_client: "Kunde werden",
-                btn_call: "Rufen Sie uns an",
+                soon_note: "Kontaktieren Sie uns in der Zwischenzeit hier &darr;",
                 cont_badge: "Kontakt",
                 cont_title: "Sprechen wir.",
                 cont_hq: "Hauptsitz",
@@ -227,9 +213,7 @@
                 marquee: "<span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mon-Fri)</span> • <span class='mx-8'>International Brands</span> • <span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mon-Fri)</span> • <span class='mx-8'>International Brands</span>",
                 nav_contact: "Contact Us",
                 soon_badge: "New website coming soon",
-                soon_note: "We are working on our new website. In the meantime we are fully at your service — get in touch with us directly.",
-                btn_client: "Become a Client",
-                btn_call: "Call Us",
+                soon_note: "In the meantime you can reach us here &darr;",
                 cont_badge: "Contact",
                 cont_title: "Let's Talk.",
                 cont_hq: "Headquarters",
