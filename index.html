@@ -45,6 +45,16 @@
         ::selection { background-color: #C5A059; color: #000; }
         .lang-btn.active { font-weight: 700; color: #C5A059; text-decoration: underline; }
         .logo-fallback { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.12em; }
+        .view-section { display: none; animation: fadeIn 0.5s ease-out; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        [hidden] { display: none !important; }
+        @media (max-width: 639px) {
+            .landing-nav { height: auto; flex-wrap: wrap; }
+            .landing-nav > div:first-child { width: 100%; justify-content: center; }
+            .landing-nav > div:last-child { width: 100%; justify-content: center; border-top: 1px solid black; }
+            .landing-nav > div:last-child > * { min-height: 52px; }
+        }
     </style>
 </head>
 <body class="font-sans text-brand-black bg-brand-offWhite antialiased">
@@ -60,15 +70,16 @@
 
     <!-- NAVIGATION -->
     <nav class="sticky top-0 z-50 bg-white border-b border-black">
-        <div class="flex justify-between items-stretch h-32 md:h-44">
+        <div class="landing-nav flex justify-between items-stretch h-32 md:h-44">
             <div class="flex-shrink-0 flex items-center px-4 md:px-8 border-r-0 md:border-r border-black bg-white">
-                <a href="#top" class="flex flex-col justify-center cursor-pointer">
+                <a href="#top" onclick="showHome()" class="flex flex-col justify-center cursor-pointer">
                     <img src="REICHEGGER- Logo.jpg" alt="Reichegger" class="h-28 md:h-40 w-auto object-contain mix-blend-multiply" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
                     <span class="logo-fallback text-3xl md:text-5xl uppercase" style="display:none;">Reichegger</span>
                 </a>
             </div>
             <div class="flex flex-1 justify-end items-stretch">
-                <a href="#contatti" class="hidden sm:flex items-center px-6 md:px-10 border-l border-black bg-brand-black text-brand-gold font-display font-bold uppercase text-xs md:text-sm hover:bg-brand-gold hover:text-black transition-colors duration-300" data-i18n="nav_contact">Contattaci</a>
+                <button type="button" onclick="showDownloadBrands()" class="flex items-center px-6 md:px-8 border-l border-black font-display font-bold uppercase text-xs md:text-sm hover:bg-brand-gold hover:text-white transition-colors duration-300">Downloads</button>
+                <a onclick="showHome()" href="#contatti" class="hidden sm:flex items-center px-6 md:px-10 border-l border-black bg-brand-black text-brand-gold font-display font-bold uppercase text-xs md:text-sm hover:bg-brand-gold hover:text-black transition-colors duration-300" data-i18n="nav_contact">Contattaci</a>
                 <div class="flex items-center px-4 md:px-6 border-l border-black gap-2 md:gap-3 text-sm font-display font-bold">
                     <button onclick="setLanguage('it')" class="lang-btn active hover:text-brand-gold">IT</button>
                     <span class="text-gray-300">|</span>
@@ -82,6 +93,7 @@
 
     <div id="top"></div>
 
+    <main id="home-view" class="view-section active">
     <!-- CONTACT -->
     <section id="contatti" class="grid grid-cols-1 lg:grid-cols-2 border-t border-black">
         <div class="bg-white p-12 md:p-20 border-b lg:border-b-0 lg:border-r border-black">
@@ -151,6 +163,84 @@
         </div>
     </section>
 
+    </main>
+     <div id="download-brands-view" class="view-section min-h-screen bg-white">
+        <div class="bg-brand-black text-white p-12 md:p-16 border-b border-white/10 relative">
+            <div class="max-w-4xl mx-auto relative z-10">
+                <button onclick="showHome()" class="text-brand-gold font-bold uppercase text-sm tracking-widest hover:text-white transition mb-6 flex items-center gap-2">
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="back_home">Torna alla Home</span>
+                </button>
+                <h1 class="font-display text-5xl md:text-7xl font-bold uppercase mb-4" data-i18n="down_brands_title">I Nostri Marchi</h1>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto p-12 md:p-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                 <button type="button" onclick="showDownloadFiles('alpirsbacher')" class="cursor-pointer border border-black hover:border-brand-gold hover:shadow-lg transition p-8 flex flex-col items-center justify-center group">
+                    <img src="Alpirsbacher_Logo_CMYK_Pantone343C.png" alt="Alpirsbacher" class="h-24 w-auto object-contain mb-4 group-hover:scale-110 transition">
+                    <span class="font-display font-bold text-lg">Alpirsbacher</span>
+                 </button>
+                 <button type="button" onclick="showDownloadFiles('ustersbacher')" class="cursor-pointer border border-black hover:border-brand-gold hover:shadow-lg transition p-8 flex flex-col items-center justify-center group">
+                    <img src="ustersbacher_logo.png" alt="Ustersbacher" class="h-24 w-auto object-contain mb-4 group-hover:scale-110 transition">
+                    <span class="font-display font-bold text-lg">Ustersbacher</span>
+                 </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="download-files-view" class="view-section min-h-screen bg-white">
+        <div class="bg-brand-black text-white p-12 md:p-16 border-b border-white/10 relative">
+            <div class="max-w-4xl mx-auto relative z-10">
+                <button onclick="showDownloadBrands()" class="text-brand-gold font-bold uppercase text-sm tracking-widest hover:text-white transition mb-6 flex items-center gap-2">
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="back_brands">Torna ai Marchi</span>
+                </button>
+                <h1 id="download-brand-title" class="font-display text-5xl md:text-7xl font-bold uppercase mb-4 break-words">Alpirsbacher</h1>
+                <p class="text-gray-400" data-i18n="files_desc">Scarica le brochure disponibili.</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto p-12 md:p-16">
+             <p id="downloads-coming-soon" hidden class="text-gray-500" data-i18n="downloads_soon">Download disponibili a breve.</p>
+             <div id="alpirsbacher-files" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <a href="Flyer.pdf" target="_blank" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Flyer</span>
+                            <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Pils.pdf" target="_blank" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Pils</span>
+                            <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Spezial.pdf" target="_blank" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Spezial</span>
+                            <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Kloster Helles.pdf" target="_blank" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Kloster Helles</span>
+                            <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Zwickel.pdf" target="_blank" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Zwickel</span>
+                            <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Weizen.pdf" target="_blank" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Weizen</span>
+                            <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Dunkel.pdf" target="_blank" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Dunkel</span>
+                            <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Weihnachtsbier.pdf" target="_blank" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Weihnachtsbier</span>
+                            <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Birra di Natale.pdf" target="_blank" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Birra di Natale</span>
+                            <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                    </div>
+        </div>
+    </div>
+
+
     <!-- FOOTER -->
     <footer class="bg-brand-black text-white border-t border-white/10">
         <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 border-b border-white/10">
@@ -169,8 +259,27 @@
     </footer>
 
     <script>
+        function showView(id) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.toggle('active', el.id === id));
+            window.scrollTo(0, 0);
+        }
+        function showHome() { showView('home-view'); }
+        function showDownloadBrands() { showView('download-brands-view'); }
+        function showDownloadFiles(brand) {
+            const isAlpirsbacher = brand === 'alpirsbacher';
+            document.getElementById('download-brand-title').textContent = isAlpirsbacher ? 'Alpirsbacher' : 'Ustersbacher';
+            document.getElementById('alpirsbacher-files').hidden = !isAlpirsbacher;
+            document.getElementById('downloads-coming-soon').hidden = isAlpirsbacher;
+            showView('download-files-view');
+        }
+
         const translations = {
             it: {
+                down_brands_title: "I Nostri Marchi",
+                back_brands: "Torna ai Marchi",
+                back_home: "Torna alla Home",
+                files_desc: "Scarica le brochure disponibili.",
+                downloads_soon: "Download disponibili a breve.",
                 form_success: "Messaggio inviato. Ti risponderemo il prima possibile. Grazie per averci contattato.",
                 form_error: "Qualcosa è andato storto. Riprova più tardi.",
                 marquee: "<span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Lun-Ven)</span> • <span class='mx-8'>Marchi Internazionali</span> • <span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Lun-Ven)</span> • <span class='mx-8'>Marchi Internazionali</span>",
@@ -186,6 +295,11 @@
                 form_btn: "Invia Richiesta"
             },
             de: {
+                down_brands_title: "Unsere Marken",
+                back_brands: "Zurück zu den Marken",
+                back_home: "Zurück zur Startseite",
+                files_desc: "Laden Sie die verfügbaren Broschüren herunter.",
+                downloads_soon: "Downloads in Kürze verfügbar.",
                 form_success: "Nachricht gesendet. Wir melden uns so schnell wie möglich bei Ihnen. Vielen Dank für Ihre Anfrage.",
                 form_error: "Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.",
                 marquee: "<span class='mx-8'>Import & Vertrieb</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mo-Fr)</span> • <span class='mx-8'>Internationale Marken</span> • <span class='mx-8'>Import & Vertrieb</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mo-Fr)</span> • <span class='mx-8'>Internationale Marken</span>",
@@ -201,6 +315,11 @@
                 form_btn: "Anfrage Senden"
             },
             en: {
+                down_brands_title: "Our Brands",
+                back_brands: "Back to Brands",
+                back_home: "Back to Home",
+                files_desc: "Download available brochures.",
+                downloads_soon: "Downloads coming soon.",
                 form_success: "Message sent. We will get back to you as soon as possible. Thank you for contacting us.",
                 form_error: "Something went wrong. Please try again later.",
                 marquee: "<span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mon-Fri)</span> • <span class='mx-8'>International Brands</span> • <span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mon-Fri)</span> • <span class='mx-8'>International Brands</span>",
