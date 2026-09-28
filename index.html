@@ -108,9 +108,9 @@
             #download-brands-view > div:last-child button { min-width: 0; padding: 20px 10px; }
             #download-brands-view > div:last-child img { width: 100%; height: 80px; margin-bottom: 16px; }
             #download-brands-view > div:last-child span { font-size: 14px; }
-            #alpirsbacher-files { grid-template-columns: 1fr; gap: 12px; }
-            #alpirsbacher-files a { min-height: 56px; gap: 16px; }
-            #alpirsbacher-files a span { min-width: 0; }
+            #download-files-view .download-files-grid { grid-template-columns: 1fr; gap: 12px; }
+            #download-files-view .download-files-grid a { min-height: 56px; gap: 16px; }
+            #download-files-view .download-files-grid a span { min-width: 0; }
             footer > div { grid-template-columns: minmax(0, 1fr); }
             footer > div > div { padding: 24px; min-width: 0; grid-column: auto; border-left: 0; }
             footer > div > div:first-child { justify-content: flex-start; border-bottom: 1px solid #ffffff1a; }
@@ -241,7 +241,7 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto p-12 md:p-16">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                  <button type="button" onclick="showDownloadFiles('alpirsbacher')" class="cursor-pointer border border-black hover:border-brand-gold hover:shadow-lg transition p-8 flex flex-col items-center justify-center group">
                     <img src="Alpirsbacher_Logo_CMYK_Pantone343C.png" alt="Alpirsbacher" class="h-24 w-auto object-contain mb-4 group-hover:scale-110 transition">
                     <span class="font-display font-bold text-lg">Alpirsbacher</span>
@@ -249,6 +249,10 @@
                  <button type="button" onclick="showDownloadFiles('ustersbacher')" class="cursor-pointer border border-black hover:border-brand-gold hover:shadow-lg transition p-8 flex flex-col items-center justify-center group">
                     <img src="ustersbacher_logo.png" alt="Ustersbacher" class="h-24 w-auto object-contain mb-4 group-hover:scale-110 transition">
                     <span class="font-display font-bold text-lg">Ustersbacher</span>
+                 </button>
+                 <button type="button" onclick="showDownloadFiles('maisels')" class="cursor-pointer border border-black hover:border-brand-gold hover:shadow-lg transition p-8 flex flex-col items-center justify-center group">
+                    <img src="maisels-weisse-logo.png" alt="Maisel's Weisse" class="h-24 w-auto object-contain mb-4 group-hover:scale-110 transition">
+                    <span class="font-display font-bold text-lg">Maisel's Weisse</span>
                  </button>
             </div>
         </div>
@@ -261,12 +265,11 @@
                     <i class="fas fa-arrow-left"></i> <span data-i18n="back_brands">Torna ai Marchi</span>
                 </button>
                 <h1 id="download-brand-title" class="font-display text-5xl md:text-7xl font-bold uppercase mb-4 break-words">Alpirsbacher</h1>
-                <p class="text-gray-400" data-i18n="files_desc">Scarica le brochure disponibili.</p>
+                <p class="text-gray-400" data-i18n="files_desc">Scarica brochure, schede prodotto e materiale informativo.</p>
             </div>
         </div>
         <div class="max-w-7xl mx-auto p-12 md:p-16">
-             <p id="downloads-coming-soon" hidden class="text-gray-500" data-i18n="downloads_soon">Download disponibili a breve.</p>
-             <div id="alpirsbacher-files" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+             <div id="alpirsbacher-files" class="download-files-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         <a href="Flyer.pdf" target="_blank" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
                             <span class="font-display font-bold uppercase text-sm">Flyer</span>
                             <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
@@ -303,7 +306,51 @@
                             <span class="font-display font-bold uppercase text-sm">Birra di Natale</span>
                             <i class="fas fa-download text-gray-400 group-hover:text-white"></i>
                         </a>
+                                            <a href="Materiale%20pubblicitario.pdf" target="_blank" rel="noopener" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Materiale pubblicitario · PDF</span>
+                            <i aria-hidden="true" class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="FUSTINI%2015%20LT%20-%20MODALITA%20D%27USO.pdf" target="_blank" rel="noopener" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Fustini 15 lt — Modalità d’uso · PDF</span>
+                            <i aria-hidden="true" class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Spezial%20-%20cassa.pdf" target="_blank" rel="noopener" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Spezial — Cassa · PDF</span>
+                            <i aria-hidden="true" class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Klosterstoff%202%20lt..jpg" target="_blank" rel="noopener" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Klosterstoff 2 lt · JPG</span>
+                            <i aria-hidden="true" class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
                     </div>
+             <div id="ustersbacher-files" hidden class="download-files-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <a href="Ustersbacher%20Prospekt%20A4%20IT.pdf" target="_blank" rel="noopener" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Brochure Ustersbacher · IT · PDF</span>
+                            <i aria-hidden="true" class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Ustersbacher_Catalogo_Promozionale_IT%20%284%29.pdf" target="_blank" rel="noopener" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Catalogo promozionale · IT · PDF</span>
+                            <i aria-hidden="true" class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Ustersbacher%203%20Prodotti.pdf" target="_blank" rel="noopener" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Hefeweizen, Urhell e Jubiläumsbier · IT · PDF</span>
+                            <i aria-hidden="true" class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+             </div>
+             <div id="maisels-files" hidden class="download-files-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <a href="Informazioni%20sul%20prodotto%20Maisel%60s%20Weisse%20Original%20%28ITA%29.pdf" target="_blank" rel="noopener" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Original · IT · PDF</span>
+                            <i aria-hidden="true" class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Produktdatenblatt%20Maisel%27s%20Weisse%20Kristall%20%28DEU%29.pdf" target="_blank" rel="noopener" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Kristall · DE · PDF</span>
+                            <i aria-hidden="true" class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+                        <a href="Informazioni%20sul%20prodotto%20Maisel%27s%20Weisse%20Alkoholfrei%20%28ITA%29%20%281%29.pdf" target="_blank" rel="noopener" class="flex items-center justify-between p-4 border border-black bg-white hover:bg-brand-gold hover:text-white transition-colors group">
+                            <span class="font-display font-bold uppercase text-sm">Alkoholfrei · IT · PDF</span>
+                            <i aria-hidden="true" class="fas fa-download text-gray-400 group-hover:text-white"></i>
+                        </a>
+             </div>
         </div>
     </div>
 
@@ -333,10 +380,12 @@
         function showHome() { showView('home-view'); }
         function showDownloadBrands() { showView('download-brands-view'); }
         function showDownloadFiles(brand) {
-            const isAlpirsbacher = brand === 'alpirsbacher';
-            document.getElementById('download-brand-title').textContent = isAlpirsbacher ? 'Alpirsbacher' : 'Ustersbacher';
-            document.getElementById('alpirsbacher-files').hidden = !isAlpirsbacher;
-            document.getElementById('downloads-coming-soon').hidden = isAlpirsbacher;
+            const brands = { alpirsbacher: 'Alpirsbacher', ustersbacher: 'Ustersbacher', maisels: "Maisel's Weisse" };
+            if (!Object.prototype.hasOwnProperty.call(brands, brand)) return;
+            document.getElementById('download-brand-title').textContent = brands[brand];
+            document.querySelectorAll('.download-files-grid').forEach(group => {
+                group.hidden = group.id !== brand + '-files';
+            });
             showView('download-files-view');
         }
 
@@ -345,8 +394,7 @@
                 down_brands_title: "I Nostri Marchi",
                 back_brands: "Torna ai Marchi",
                 back_home: "Torna alla Home",
-                files_desc: "Scarica le brochure disponibili.",
-                downloads_soon: "Download disponibili a breve.",
+                files_desc: "Scarica brochure, schede prodotto e materiale informativo.",
                 form_success: "Messaggio inviato. Ti risponderemo il prima possibile. Grazie per averci contattato.",
                 form_error: "Qualcosa è andato storto. Riprova più tardi.",
                 marquee: "<span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Lun-Ven)</span> • <span class='mx-8'>Marchi Internazionali</span> • <span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Lun-Ven)</span> • <span class='mx-8'>Marchi Internazionali</span>",
@@ -365,8 +413,7 @@
                 down_brands_title: "Unsere Marken",
                 back_brands: "Zurück zu den Marken",
                 back_home: "Zurück zur Startseite",
-                files_desc: "Laden Sie die verfügbaren Broschüren herunter.",
-                downloads_soon: "Downloads in Kürze verfügbar.",
+                files_desc: "Broschüren, Produktdatenblätter und Informationsmaterial herunterladen.",
                 form_success: "Nachricht gesendet. Wir melden uns so schnell wie möglich bei Ihnen. Vielen Dank für Ihre Anfrage.",
                 form_error: "Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.",
                 marquee: "<span class='mx-8'>Import & Vertrieb</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mo-Fr)</span> • <span class='mx-8'>Internationale Marken</span> • <span class='mx-8'>Import & Vertrieb</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mo-Fr)</span> • <span class='mx-8'>Internationale Marken</span>",
@@ -385,8 +432,7 @@
                 down_brands_title: "Our Brands",
                 back_brands: "Back to Brands",
                 back_home: "Back to Home",
-                files_desc: "Download available brochures.",
-                downloads_soon: "Downloads coming soon.",
+                files_desc: "Download brochures, product sheets and information materials.",
                 form_success: "Message sent. We will get back to you as soon as possible. Thank you for contacting us.",
                 form_error: "Something went wrong. Please try again later.",
                 marquee: "<span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mon-Fri)</span> • <span class='mx-8'>International Brands</span> • <span class='mx-8'>Import & wholesale</span> • <span class='mx-8'>07:00 - 12:00 | 14:00 - 19:00 (Mon-Fri)</span> • <span class='mx-8'>International Brands</span>",
