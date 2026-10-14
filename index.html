@@ -52,6 +52,9 @@
         .contact-link:hover, .bank-link:hover { color: #8a692e; text-decoration: underline; text-underline-offset: 4px; }
         .contact-link:focus-visible, .bank-link:focus-visible, .bank-copy:focus-visible { outline: 2px solid #C5A059; outline-offset: 4px; }
         .bank-link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; transition: color .2s; }
+        #bank-heading:focus { outline: none; }
+        .bank-contact-row .bank-link { min-height: 48px; }
+        @media (max-width: 1023px) { .bank-contact-row .bank-link { min-height: 40px; } }
         .bank-card { max-width: 896px; margin: 0 auto; border: 1px solid #111; background: white; }
         .bank-row { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 16px; padding: 24px; border-bottom: 1px solid #e5e7eb; }
         .bank-row:last-child { border-bottom: 0; }
@@ -60,8 +63,10 @@
         .bank-iban { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
         .bank-iban-value { font-variant-numeric: tabular-nums; }
         .bank-iban-value span { display: inline-block; }
-        .bank-copy { min-height: 44px; padding: 10px 16px; border: 1px solid #111; background: #111; color: white; font: inherit; cursor: pointer; transition: background .2s, color .2s; }
-        .bank-copy:hover { background: #C5A059; color: #111; }
+        .bank-copy { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 12px; border: 1px solid #C5A059; background: transparent; color: #111; font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600; line-height: 1.4; text-transform: uppercase; letter-spacing: .06em; cursor: pointer; transition: background .2s, border-color .2s; }
+        .bank-copy:hover { background: #C5A0591a; border-color: #111; }
+        .bank-copy i { font-size: 13px; }
+        .bank-status:empty { display: none; }
         .bank-status { min-height: 24px; margin-top: 8px; font-size: 14px; }
         @media (max-width: 1023px) {
             #bank-details-view > div { padding: 28px 24px; }
@@ -222,8 +227,11 @@
                     <div>
                         <p class="font-bold font-display uppercase text-lg" data-i18n="cont_hours">Orari</p>
                         <p class="text-gray-600" data-i18n="cont_hours_val">07:00 - 12:00 | 14:00 - 19:00 (Lun-Ven)</p>
-                        <a id="bank-details-link" href="/bankverbindungen?lang=it" class="bank-link font-display font-bold text-sm mt-2" onclick="openBankDetails(event)"><i class="fas fa-landmark" aria-hidden="true"></i><span data-i18n="bank_title">Coordinate bancarie</span></a>
                     </div>
+                </div>
+                <div class="bank-contact-row flex items-start gap-6">
+                    <div class="w-12 h-12 bg-brand-gold flex items-center justify-center border border-black shrink-0"><i class="fas fa-landmark text-xl" aria-hidden="true"></i></div>
+                    <div><a id="bank-details-link" href="/bankverbindungen?lang=it" class="bank-link font-display font-bold uppercase text-lg" onclick="openBankDetails(event)"><span data-i18n="bank_title">Coordinate bancarie</span></a></div>
                 </div>
             </div>
         </div>
@@ -389,7 +397,7 @@
                 <div class="bank-row"><dt data-i18n="bank_name">Banca</dt><dd>Raiffeisenkasse Ritten - Cassa Rurale Renon</dd></div>
                 <div class="bank-row"><dt>IBAN</dt><dd>
                     <div class="bank-iban"><span class="bank-iban-value"><span>IT 77 S</span> <span>08187</span> <span>11600</span> <span>000004040905</span></span>
-                    <button type="button" class="bank-copy font-display" onclick="copyIban()"><i class="fas fa-copy" aria-hidden="true"></i> <span data-i18n="bank_copy">Copia IBAN</span></button></div>
+                    <button type="button" class="bank-copy font-display" onclick="copyIban()"><i class="far fa-copy" aria-hidden="true"></i><span data-i18n="bank_copy">Copia IBAN</span></button></div>
                     <p id="bank-copy-status" class="bank-status" role="status" aria-live="polite" aria-atomic="true"></p>
                 </dd></div>
                 <div class="bank-row"><dt>SWIFT/BIC</dt><dd>RZSBIT21030</dd></div>
