@@ -48,6 +48,26 @@
         .view-section { display: none; animation: fadeIn 0.5s ease-out; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .contact-link { display: inline-flex; align-items: center; min-height: 44px; color: inherit; transition: color .2s; }
+        .contact-link:hover, .bank-link:hover { color: #8a692e; text-decoration: underline; text-underline-offset: 4px; }
+        .contact-link:focus-visible, .bank-link:focus-visible, .bank-copy:focus-visible { outline: 2px solid #C5A059; outline-offset: 4px; }
+        .bank-link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; transition: color .2s; }
+        .bank-card { max-width: 896px; margin: 0 auto; border: 1px solid #111; background: white; }
+        .bank-row { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 16px; padding: 24px; border-bottom: 1px solid #e5e7eb; }
+        .bank-row:last-child { border-bottom: 0; }
+        .bank-row dt { font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase; }
+        .bank-row dd { min-width: 0; overflow-wrap: anywhere; }
+        .bank-iban { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .bank-iban-value { font-variant-numeric: tabular-nums; }
+        .bank-iban-value span { display: inline-block; }
+        .bank-copy { min-height: 44px; padding: 10px 16px; border: 1px solid #111; background: #111; color: white; font: inherit; cursor: pointer; transition: background .2s, color .2s; }
+        .bank-copy:hover { background: #C5A059; color: #111; }
+        .bank-status { min-height: 24px; margin-top: 8px; font-size: 14px; }
+        @media (max-width: 1023px) {
+            #bank-details-view > div { padding: 28px 24px; }
+            #bank-details-view h1 { font-size: clamp(26px, 7.4vw, 48px); line-height: 1.12; letter-spacing: -.035em; }
+            .bank-row { grid-template-columns: 1fr; gap: 8px; padding: 20px; }
+        }
         [hidden] { display: none !important; }
         /* Compact navigation and readable content on phones and tablets. */
         @media (max-width: 1023px) {
@@ -173,21 +193,21 @@
                     <div class="w-12 h-12 bg-brand-gold flex items-center justify-center border border-black shrink-0"><i class="fas fa-map-marker-alt text-xl"></i></div>
                     <div>
                         <p class="font-bold font-display uppercase text-lg" data-i18n="cont_hq">Sede Operativa</p>
-                        <p class="text-gray-600" data-i18n="cont_address">Via Copernico 1, Bolzano (BZ)</p>
+                        <p class="text-gray-600"><a class="contact-link" href="https://www.google.com/maps/search/?api=1&amp;query=Reichegger%20S.R.L.%2C%20Via%20Nicolo%20Copernico%201%2C%2039100%20Bolzano%2C%20Italy" target="_blank" rel="noopener noreferrer" data-i18n="cont_address">Via Copernico 1, Bolzano (BZ)</a></p>
                     </div>
                 </div>
                 <div class="flex items-start gap-6">
                     <div class="w-12 h-12 bg-brand-gold flex items-center justify-center border border-black shrink-0"><i class="fas fa-phone text-xl"></i></div>
                     <div>
                         <p class="font-bold font-display uppercase text-lg" data-i18n="cont_phone">Telefono</p>
-                        <p class="text-gray-600">+39 0471 93 11 16</p>
+                        <p class="text-gray-600"><a class="contact-link" href="tel:+390471931116">+39 0471 93 11 16</a></p>
                     </div>
                 </div>
                 <div class="flex items-start gap-6">
                     <div class="w-12 h-12 bg-brand-gold flex items-center justify-center border border-black shrink-0"><i class="fas fa-envelope text-xl"></i></div>
                     <div>
                         <p class="font-bold font-display uppercase text-lg">Email</p>
-                        <p class="text-gray-600">info@reichegger.it</p>
+                        <p class="text-gray-600"><a class="contact-link" href="mailto:info@reichegger.it">info@reichegger.it</a></p>
                     </div>
                 </div>
                 <div class="flex items-start gap-6">
@@ -202,6 +222,7 @@
                     <div>
                         <p class="font-bold font-display uppercase text-lg" data-i18n="cont_hours">Orari</p>
                         <p class="text-gray-600" data-i18n="cont_hours_val">07:00 - 12:00 | 14:00 - 19:00 (Lun-Ven)</p>
+                        <a id="bank-details-link" href="/bankverbindungen?lang=it" class="bank-link font-display font-bold text-sm mt-2" onclick="openBankDetails(event)"><i class="fas fa-landmark" aria-hidden="true"></i><span data-i18n="bank_title">Coordinate bancarie</span></a>
                     </div>
                 </div>
             </div>
@@ -355,6 +376,29 @@
     </div>
 
 
+    <main id="bank-details-view" class="view-section min-h-screen bg-white" aria-labelledby="bank-heading">
+        <div class="bg-brand-black text-white p-12 md:p-16 border-b border-white/10">
+            <div class="max-w-4xl mx-auto">
+                <a href="/?lang=it#contatti" class="bank-link text-brand-gold font-bold uppercase text-sm tracking-widest mb-6" data-contact-return onclick="returnToContact(event)"><i class="fas fa-arrow-left" aria-hidden="true"></i><span data-i18n="bank_back">Torna ai contatti</span></a>
+                <h1 id="bank-heading" tabindex="-1" class="font-display text-5xl md:text-7xl font-bold uppercase" data-i18n="bank_title">Coordinate bancarie</h1>
+            </div>
+        </div>
+        <div class="p-12 md:p-16 bg-gray-50">
+            <dl class="bank-card">
+                <div class="bank-row"><dt data-i18n="bank_holder">Intestatario</dt><dd>REICHEGGER S.R.L.</dd></div>
+                <div class="bank-row"><dt data-i18n="bank_name">Banca</dt><dd>Raiffeisenkasse Ritten - Cassa Rurale Renon</dd></div>
+                <div class="bank-row"><dt>IBAN</dt><dd>
+                    <div class="bank-iban"><span class="bank-iban-value"><span>IT 77 S</span> <span>08187</span> <span>11600</span> <span>000004040905</span></span>
+                    <button type="button" class="bank-copy font-display" onclick="copyIban()"><i class="fas fa-copy" aria-hidden="true"></i> <span data-i18n="bank_copy">Copia IBAN</span></button></div>
+                    <p id="bank-copy-status" class="bank-status" role="status" aria-live="polite" aria-atomic="true"></p>
+                </dd></div>
+                <div class="bank-row"><dt>SWIFT/BIC</dt><dd>RZSBIT21030</dd></div>
+                <div class="bank-row"><dt>ABI</dt><dd>08187</dd></div>
+                <div class="bank-row"><dt>CAB</dt><dd>58740</dd></div>
+            </dl>
+        </div>
+    </main>
+
     <!-- FOOTER -->
     <footer class="bg-brand-black text-white border-t border-white/10">
         <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 border-b border-white/10">
@@ -377,8 +421,11 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.toggle('active', el.id === id));
             window.scrollTo(0, 0);
         }
-        function showHome() { showView('home-view'); }
-        function showDownloadBrands() { showView('download-brands-view'); }
+        function showHome() {
+            if (isBankPath()) history.pushState(null, '', '/?lang=' + document.documentElement.lang);
+            showView('home-view');
+        }
+        function showDownloadBrands() { showHome(); showView('download-brands-view'); }
         function showDownloadFiles(brand) {
             const brands = { alpirsbacher: 'Alpirsbacher', ustersbacher: 'Ustersbacher', maisels: "Maisel's Weisse" };
             if (!Object.prototype.hasOwnProperty.call(brands, brand)) return;
@@ -391,6 +438,14 @@
 
         const translations = {
             it: {
+                bank_title: "Coordinate bancarie",
+                bank_holder: "Intestatario",
+                bank_name: "Banca",
+                bank_copy: "Copia IBAN",
+                bank_copied: "IBAN copiato.",
+                bank_copy_error: "Copia non riuscita. Seleziona e copia l’IBAN manualmente.",
+                bank_back: "Torna ai contatti",
+
                 down_brands_title: "I Nostri Marchi",
                 back_brands: "Torna ai Marchi",
                 back_home: "Torna alla Home",
@@ -410,6 +465,14 @@
                 form_btn: "Invia Richiesta"
             },
             de: {
+                bank_title: "Bankverbindungen",
+                bank_holder: "Kontoinhaber",
+                bank_name: "Bank",
+                bank_copy: "IBAN kopieren",
+                bank_copied: "IBAN kopiert.",
+                bank_copy_error: "Kopieren fehlgeschlagen. Bitte die IBAN auswählen und manuell kopieren.",
+                bank_back: "Zurück zum Kontakt",
+
                 down_brands_title: "Unsere Marken",
                 back_brands: "Zurück zu den Marken",
                 back_home: "Zurück zur Startseite",
@@ -429,6 +492,14 @@
                 form_btn: "Anfrage Senden"
             },
             en: {
+                bank_title: "Bank Details",
+                bank_holder: "Account holder",
+                bank_name: "Bank",
+                bank_copy: "Copy IBAN",
+                bank_copied: "IBAN copied.",
+                bank_copy_error: "Copy failed. Please select and copy the IBAN manually.",
+                bank_back: "Back to contact",
+
                 down_brands_title: "Our Brands",
                 back_brands: "Back to Brands",
                 back_home: "Back to Home",
@@ -450,6 +521,8 @@
         };
 
         function setLanguage(lang) {
+            if (!Object.prototype.hasOwnProperty.call(translations, lang)) return;
+            try { localStorage.setItem('reichegger-language', lang); } catch (_) {}
             document.documentElement.lang = lang;
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -461,7 +534,78 @@
                     el.innerHTML = translations[lang][key];
                 }
             });
+            updateLanguageLinks();
         }
+
+        function isBankPath() { return /^\/bankverbindungen\/?$/.test(location.pathname); }
+        function updateLanguageLinks() {
+            const lang = document.documentElement.lang;
+            document.getElementById('bank-details-link').href = '/bankverbindungen?lang=' + lang;
+            document.querySelectorAll('[data-contact-return]').forEach(link => link.href = '/?lang=' + lang + '#contatti');
+            if (isBankPath() || new URLSearchParams(location.search).has('lang')) {
+                const url = new URL(location.href);
+                url.searchParams.set('lang', lang);
+                history.replaceState(null, '', url);
+            }
+        }
+        function interceptNavigation(event) {
+            return !event || !(event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey);
+        }
+        function openBankDetails(event) {
+            if (!interceptNavigation(event)) return;
+            if (event) event.preventDefault();
+            history.pushState(null, '', document.getElementById('bank-details-link').href);
+            showView('bank-details-view');
+            document.getElementById('bank-heading').focus({ preventScroll: true });
+        }
+        function returnToContact(event) {
+            if (!interceptNavigation(event)) return;
+            if (event) event.preventDefault();
+            history.pushState(null, '', '/?lang=' + document.documentElement.lang + '#contatti');
+            showView('home-view');
+            document.getElementById('bank-details-link').focus({ preventScroll: true });
+            document.getElementById('contatti').scrollIntoView();
+        }
+        function restoreRoute() {
+            const queryLang = new URLSearchParams(location.search).get('lang');
+            let savedLang;
+            try { savedLang = localStorage.getItem('reichegger-language'); } catch (_) {}
+            setLanguage(Object.prototype.hasOwnProperty.call(translations, queryLang) ? queryLang :
+                Object.prototype.hasOwnProperty.call(translations, savedLang) ? savedLang : 'it');
+            showView(isBankPath() ? 'bank-details-view' : 'home-view');
+            if (!isBankPath() && location.hash === '#contatti') document.getElementById('contatti').scrollIntoView();
+        }
+        let copyStatusTimer;
+        async function copyIban() {
+            const iban = 'IT77S0818711600000004040905';
+            const status = document.getElementById('bank-copy-status');
+            clearTimeout(copyStatusTimer);
+            let copied = false;
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(iban);
+                    copied = true;
+                }
+            } catch (_) {}
+            if (!copied) {
+                const field = document.createElement('textarea');
+                field.value = iban;
+                field.setAttribute('readonly', '');
+                field.style.cssText = 'position:fixed;left:-9999px;top:0';
+                const focused = document.activeElement;
+                document.body.appendChild(field);
+                field.select();
+                try { copied = document.execCommand('copy'); } catch (_) {}
+                field.remove();
+                if (focused) focused.focus({ preventScroll: true });
+            }
+            const key = copied ? 'bank_copied' : 'bank_copy_error';
+            status.dataset.i18n = key;
+            status.textContent = translations[document.documentElement.lang][key];
+            copyStatusTimer = setTimeout(() => { status.textContent = ''; delete status.dataset.i18n; }, 5000);
+        }
+        window.addEventListener('popstate', restoreRoute);
+        restoreRoute();
 
         // Contact form (Formspree, async)
         const form = document.getElementById("contact-form");
