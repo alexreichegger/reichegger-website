@@ -433,14 +433,25 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.toggle('active', el.id === id));
             window.scrollTo(0, 0);
         }
+        function updateViewUrl(hash) {
+            const url = new URL(location.href);
+            if (isBankPath()) url.pathname = '/';
+            url.hash = hash;
+            url.searchParams.set('lang', document.documentElement.lang);
+            if (url.href !== location.href) history.pushState(null, '', url);
+        }
         function showHome() {
-            if (isBankPath()) history.pushState(null, '', '/?lang=' + document.documentElement.lang);
+            updateViewUrl('');
             showView('home-view');
         }
-        function showDownloadBrands() { showHome(); showView('download-brands-view'); }
-        function showDownloadFiles(brand) {
+        function showDownloadBrands(updateUrl = true) {
+            if (updateUrl) updateViewUrl('#downloads');
+            showView('download-brands-view');
+        }
+        function showDownloadFiles(brand, updateUrl = true) {
             const brands = { alpirsbacher: 'Alpirsbacher', ustersbacher: 'Ustersbacher', maisels: "Maisel's Weisse" };
             if (!Object.prototype.hasOwnProperty.call(brands, brand)) return;
+            if (updateUrl) updateViewUrl('#downloads/' + brand);
             document.getElementById('download-brand-title').textContent = brands[brand];
             document.querySelectorAll('.download-files-grid').forEach(group => {
                 group.hidden = group.id !== brand + '-files';
@@ -554,7 +565,7 @@
             const lang = document.documentElement.lang;
             document.getElementById('bank-details-link').href = '/bankverbindungen?lang=' + lang;
             document.querySelectorAll('[data-contact-return]').forEach(link => link.href = '/?lang=' + lang + '#contatti');
-            if (isBankPath() || new URLSearchParams(location.search).has('lang')) {
+            if (isBankPath() || location.hash === '#downloads' || location.hash.startsWith('#downloads/') || new URLSearchParams(location.search).has('lang')) {
                 const url = new URL(location.href);
                 url.searchParams.set('lang', lang);
                 history.replaceState(null, '', url);
@@ -584,8 +595,18 @@
             try { savedLang = localStorage.getItem('reichegger-language'); } catch (_) {}
             setLanguage(Object.prototype.hasOwnProperty.call(translations, queryLang) ? queryLang :
                 Object.prototype.hasOwnProperty.call(translations, savedLang) ? savedLang : 'it');
-            showView(isBankPath() ? 'bank-details-view' : 'home-view');
-            if (!isBankPath() && location.hash === '#contatti') document.getElementById('contatti').scrollIntoView();
+            if (isBankPath()) {
+                showView('bank-details-view');
+            } else if (location.hash === '#downloads' || location.hash === '#downloads/') {
+                showDownloadBrands(false);
+            } else if (location.hash.startsWith('#downloads/')) {
+                const brand = location.hash.slice('#downloads/'.length);
+                if (['alpirsbacher', 'ustersbacher', 'maisels'].includes(brand)) showDownloadFiles(brand, false);
+                else showDownloadBrands(false);
+            } else {
+                showView('home-view');
+                if (location.hash === '#contatti') document.getElementById('contatti').scrollIntoView();
+            }
         }
         let copyStatusTimer;
         async function copyIban() {
@@ -617,6 +638,7 @@
             copyStatusTimer = setTimeout(() => { status.textContent = ''; delete status.dataset.i18n; }, 5000);
         }
         window.addEventListener('popstate', restoreRoute);
+        window.addEventListener('hashchange', restoreRoute);
         restoreRoute();
 
         // Contact form (Formspree, async)
